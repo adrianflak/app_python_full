@@ -37,7 +37,7 @@ jobs:
         uses: azure/appservice-build@v3
         with: 
           platform: nodejs
-          platform-version: 16.16.0
+          platform-version: 16.18.0
       - name: Wdrożenie aplikacja na Azure App Service
         uses: azure/webapps-deploy@v1
         with: 
