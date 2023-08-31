@@ -41,6 +41,6 @@ jobs:
       - name: Wdrożenie aplikacja na Azure App Service
         uses: azure/webapps-deploy@v1
         with: 
-          app-name: frontend-aplikacja1
+          app-name: frontend-app-af
           publish-profile: ${{secrets.AZURE_WEB_APP_PUBLISH_PROFILE}}
         
