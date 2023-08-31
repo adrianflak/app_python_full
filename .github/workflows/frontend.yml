@@ -1,0 +1,46 @@
+name: Warstwa Frontend aplikacji internetowej
+on: 
+  push: 
+    branches: 
+      - main
+      - frontend
+  pull_request:
+    branches: 
+      - main
+      - frontend
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        node_version: ["12","14","16","18"]
+    steps:
+    - name: Pobranie kodu z repozytorium
+      uses: actions/checkout@v3
+    - name: Dołączenie Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: "16.16.0"
+
+    - name: Instalacja dependencji
+      run: npm install
+    - name: Uruchomienie testów
+      run: npm test
+  deploy: 
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps: 
+      - name: Pobranie kodu z repozytorium
+        uses: actions/checkout@v3
+      - name: Podłączenie Usługi Azure App Service
+        uses: azure/appservice-build@v3
+        with: 
+          platform: nodejs
+          version: 16.16.0
+      - name: Wdrożenie aplikacja na Azure App Service
+        uses: azure/webapps-deploy@v1
+        with: 
+          app-name: frontend-aplikacja1
+          publish-profile: ${{secrets.AZURE_WEB_APP_PUBLISH_PROFILE}}
+        
